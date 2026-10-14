@@ -61,6 +61,24 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Release obsolete Pages deployment queue
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const repo = context.repo;
+            const deployments = await github.rest.repos.listDeployments({...repo, environment: 'github-pages', per_page: 10});
+            const oldShas = [...new Set(deployments.data.map(d => d.sha))].filter(sha => sha !== context.sha);
+            const terminal = new Set(['succeed', 'success', 'failure', 'failed', 'cancelled', 'canceled', 'deployment_failed', 'deployment_cancelled']);
+            for (const sha of oldShas) {
+              try {
+                const status = await github.request('GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}', {...repo, pages_deployment_id: sha});
+                if (terminal.has(status.data.status)) continue;
+                core.info(`Cancelling obsolete Pages publication ${sha}: ${status.data.status}`);
+                await github.request('POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel', {...repo, pages_deployment_id: sha});
+              } catch (error) {
+                if (error.status !== 404) throw error;
+              }
+            }
       - name: Publish Pages
         id: deployment
         uses: actions/deploy-pages@v4
