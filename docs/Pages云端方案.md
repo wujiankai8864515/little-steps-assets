@@ -13,7 +13,7 @@
 
 入口：https://wujiankai8864515.github.io/little-steps-assets/
 
-Pages 是发布服务。持久写入使用 GitHub Git Database API，原文件与目录在一次提交中原子发布；Pages 工作流监听两条分支并自动发布。并发更新使用非强制更新并重新合并目录，不覆盖他人的提交。
+Pages 是发布服务。持久写入使用 GitHub Git Database API，原文件与目录在一次提交中原子发布；资源分支的轻量工作流通知默认 main 分支，由受保护的 main 工作流自动发布。并发更新使用非强制更新并重新合并目录，不覆盖他人的提交。
 
 本 Mac 的远端获取配置仅包含 `main`，并关闭自动获取 tag。新电脑使用 `git clone --single-branch --branch main git@github.com:wujiankai8864515/little-steps-assets.git`。不要合并资源分支或执行全分支镜像克隆。
 
@@ -51,6 +51,6 @@ node scripts/cloud.mjs inspect ASSET_ID
 node scripts/cloud.mjs url ASSET_ID
 ```
 
-`cloud.mjs` 仅读取公共目录和资源网址，不下载模型。`npm ci` / `npm run build` 仍用于原本机前端；`npm run build:pages` 构建当前网页。部署工作流在 `main` 与 `asset-library` 中保持同一版本，所有资源合并仅在 GitHub 运行机完成。
+`cloud.mjs` 仅读取公共目录和资源网址，不下载模型。`npm ci` / `npm run build` 构建当前 Pages 网页。原本机前端使用 `npm run build:local`（dist-local）与 `npm run start:local`。`library.yml` 通知工作流在两条分支保持一致；`pages.yml` 发布工作流只由受保护的 main 分支执行，所有资源合并仅在 GitHub 运行机完成。
 
 原 `代码包清单.json` 是 2026-10-09 导入快照的校验清单。后续修改以 Git 提交为准；重新打包会生成新的校验清单。代码打包脚本包含 `web/` 与部署 YAML，并排除资源目录。

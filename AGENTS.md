@@ -4,7 +4,7 @@
 
 - 只使用 wujiankai8864515/little-steps-assets。网页在 GitHub Pages，代码在 main，资源在 asset-library。
 - Mac 只获取 main；不执行全分支 fetch、镜像克隆、资源分支合并或本地资源检出。资源操作通过网页/GitHub API，发布时只在 GitHub 运行机合并资源。
-- 当前入口为 web/；Pages 部署工作流须在两条分支保持一致。旧 Windows 本机入口与全局 Skill 约定属于历史功能，不自动安装或改写本 Mac 的全局绑定。
+- 当前入口为 web/；library.yml 通知工作流须在两条分支保持一致，pages.yml 只在受保护的 main 发布。旧 Windows 本机入口与全局 Skill 约定属于历史功能，不自动安装或改写本 Mac 的全局绑定。
 - 保留原文件、材质、精确片段和来源。不往库存自动添加演示资源，不产生未授权收费任务。临时验证文件不发布、不入库，完成后清理。
 - 浏览器不持久保存资源或令牌，只保留少量 UI 配置；下载由用户明确点击。容量按 docs/Pages云端方案.md 执行。
 - 功能边界与验证分别陈述，不把原项目历史模型、Lux3D/Blender 本机能力当作 Pages 已部署能力。

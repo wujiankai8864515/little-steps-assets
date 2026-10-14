@@ -1,7 +1,11 @@
 name: Publish asset studio and library
 on:
   push:
-    branches: [main, asset-library]
+    branches: [main]
+  workflow_run:
+    workflows: [Asset library updated]
+    types: [completed]
+    branches: [asset-library]
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,6 +16,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

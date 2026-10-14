@@ -66,11 +66,16 @@ async function base64(blob){
 async function head(){const ref=await api(`/git/ref/heads/${CLOUD.branch}`);const commit=await api(`/git/commits/${ref.object.sha}`);return {sha:ref.object.sha,tree:commit.tree.sha};}
 async function commitMutation(mutate,files,message,onProgress){
   if(!credential)throw Error('请先连接 GitHub，文件会直接上传到资源分支');
+  for(const file of files){safePath(file.path);if(file.blob.size>FILE_LIMIT)throw Error('单个文件请控制在 40 MB 以内；大型资源适合 GitHub Releases 或对象存储');}
+  const firstHead=await head(),firstTree=await api(`/git/trees/${firstHead.tree}?recursive=1`);
+  if(firstTree.truncated)throw Error('资源库目录过大，无法完整核对容量；请先整理资源');
+  const planned=new Map(firstTree.tree.filter(e=>e.type==='blob').map(e=>[e.path,e.size||0]));
+  for(const file of files)planned.set(file.path,file.blob.size);
+  if([...planned.values()].reduce((a,b)=>a+b,0)>LIBRARY_LIMIT)throw Error('资源库接近 Pages 的 1 GB 上限，请先改用 Releases 或对象存储');
   const fileEntries=[];
   let sent=0;
   for(const file of files){
     safePath(file.path);
-    if(file.blob.size>FILE_LIMIT)throw Error('单个文件请控制在 40 MB 以内；大型资源适合 GitHub Releases 或对象存储');
     onProgress?.(`上传文件 ${++sent} / ${files.length}`);
     const value=await api('/git/blobs',{method:'POST',body:{content:await base64(file.blob),encoding:'base64'}});
     file.sha=value.sha;fileEntries.push({path:file.path,mode:'100644',type:'blob',sha:value.sha});
