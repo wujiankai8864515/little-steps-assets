@@ -64,14 +64,14 @@ async function base64(blob){
   return await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.slice(reader.result.indexOf(',')+1));reader.onerror=()=>reject(Error('读取上传内容失败'));reader.readAsDataURL(blob);});
 }
 async function head(){const ref=await api(`/git/ref/heads/${CLOUD.branch}`);const commit=await api(`/git/commits/${ref.object.sha}`);return {sha:ref.object.sha,tree:commit.tree.sha};}
-export async function requestPublication(){
+export async function requestPublication({force=false}={}){
   if(!credential)throw Error('请先连接 GitHub');
   // A tiny code-branch pointer gives each resource update its own Pages version.
   // No model, image, frame or asset catalog is copied to the code branch.
   for(let attempt=0;attempt<3;attempt++){
     const ref=await api(`/git/ref/heads/${CLOUD.branch}`);
     let previous;try{previous=await api('/contents/.github/library-state.json?ref=main');}catch(e){if(e.status!==404)throw e;}
-    if(previous?.content){try{const value=JSON.parse(atob(previous.content.replace(/\n/g,'')));if(value.libraryCommit===ref.object.sha)return {queued:true};}catch{}}
+    if(previous?.content&&!force){try{const value=JSON.parse(atob(previous.content.replace(/\n/g,'')));if(value.libraryCommit===ref.object.sha)return {queued:true};}catch{}}
     const body={message:`Publish cloud library ${ref.object.sha.slice(0,7)}`,branch:'main',content:await base64(new Blob([JSON.stringify({schema:1,libraryCommit:ref.object.sha,updatedAt:new Date().toISOString()},null,2)+'\n'],{type:'application/json'}))};
     if(previous?.sha)body.sha=previous.sha;
     try{await api('/contents/.github/library-state.json',{method:'PUT',body});return {queued:true};}
