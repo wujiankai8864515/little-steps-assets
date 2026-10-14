@@ -73,7 +73,8 @@ jobs:
                 core.info(`Releasing obsolete Pages publication ${sha}`);
                 await github.request('POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel', {...repo, pages_deployment_id: sha});
               } catch (error) {
-                if (![404, 409, 422].includes(error.status)) throw error;
+                const finished = error.status === 400 && /as it's finished|already finished/i.test(error.message || '');
+                if (!finished && ![404, 409, 422].includes(error.status)) throw error;
               }
             }
       - name: Publish Pages
