@@ -42,7 +42,7 @@ export default function UploadDialog({onClose,onSaved,onConnect}){
       if(cover){const p=`assets/${id}/cover.${prepared.image?prepared.image.name.split('.').at(-1).toLowerCase():'png'}`;refs.push(fileRef(p,cover));uploads.push({path:p,blob:cover});posterPath=p;}
       if(prepared.original){const extension=prepared.originalName.split('.').at(-1).toLowerCase(),p=`assets/${id}/source.${extension}`;refs.push(fileRef(p,prepared.original));uploads.push({path:p,blob:prepared.original});}
       const asset={id,name:name.trim(),kind,modelFamilyId:prepared.gltf?id:undefined,createdAt:new Date().toISOString(),status:'pending',files:refs,primaryPath:path,posterPath,source:'用户导入',metadata:prepared.info||{},originalName:files[0]?.name};
-      const result=await saveAsset(asset,uploads,setProgress);onSaved(result.catalog);onClose();
+      const result=await saveAsset(asset,uploads,setProgress);onSaved(result);onClose();
     }catch(e){setError(e.message);}finally{setBusy(false);setProgress('');}
   }
   const accept=kind==='model'||kind==='motion'?'.glb,.gltf,.fbx,.bin,.png,.jpg,.jpeg,.webp':kind==='image'?'.png,.jpg,.jpeg,.webp,.gif':'.png,.jpg,.jpeg,.webp,.gif,.zip,.json,.mp3,.wav,.ogg,.bin';

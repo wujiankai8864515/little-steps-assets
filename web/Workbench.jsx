@@ -42,7 +42,7 @@ export default function Workbench({catalog,preferredModelId,onCatalog,onConnect,
     try{
       const bytes=picks.length?assembled.bytes:selectAnimations(value.bytes,[]),blob=new Blob([bytes],{type:'model/gltf-binary'}),id=newId(),path=`assets/${id}/model.glb`;
       const asset={id,name:`${model.name} · ${picks.length} 动作`,kind:'model',modelFamilyId:model.modelFamilyId||model.id,parentId:model.id,source:'工作台动作组合',createdAt:new Date().toISOString(),status:'pending',primaryPath:path,posterPath:model.posterPath,files:[fileRef(path,blob),...model.files.filter(f=>f.path===model.posterPath)],metadata:picks.length?modelInfo(assembled.gltf):{...model.metadata,animations:[]},motionOrigins:selected};
-      const output=await saveAsset(asset,[{path,blob}],setProgress);onCatalog(output.catalog);onNotify('选用动作已保存为模型的新版本，原模型保留');
+      const output=await saveAsset(asset,[{path,blob}],setProgress);onCatalog(output.catalog);onNotify(output.publishing==='failed'?'模型已保存，发布未启动；可在云端存储重新发布':'选用动作已保存为模型的新版本，原模型保留',output.publishing==='failed'?'error':'success');
     }catch(e){setError(e.message);}finally{setBusy(false);setProgress('');}
   }
   async function generate(){
@@ -67,7 +67,7 @@ export default function Workbench({catalog,preferredModelId,onCatalog,onConnect,
     try{
       const id=resultId.current,entries=[['frames.zip',result.zip],['animation.gif',result.gif],['frames.json',result.json],['cover.png',result.poster]],files=entries.map(([file,blob])=>({path:`assets/${id}/${file}`,blob}));
       const asset={id,name:`${model.name} · ${picks.length} 个 2D 动作`,kind:'sprite',source:'工作台序列帧',createdAt:new Date().toISOString(),status:'pending',primaryPath:`assets/${id}/frames.zip`,gifPath:`assets/${id}/animation.gif`,posterPath:`assets/${id}/cover.png`,files:files.map(f=>fileRef(f.path,f.blob)),parentId:model.id,workspaceId,metadata:result.metadata};
-      const saved=await saveAsset(asset,files,setProgress);onCatalog(saved.catalog);setSavedFrames(true);onNotify('原始 PNG、图集、GIF 与播放配置已保存到 GitHub');
+      const saved=await saveAsset(asset,files,setProgress);onCatalog(saved.catalog);setSavedFrames(true);onNotify(saved.publishing==='failed'?'序列帧已保存，发布未启动；可在云端存储重新发布':'原始 PNG、图集、GIF 与播放配置已保存到 GitHub',saved.publishing==='failed'?'error':'success');
     }catch(e){setError(e.message);}finally{setBusy(false);setProgress('');}
   }
   function viewChanged(next){setView(next);setResult(null);setSavedFrames(false);}

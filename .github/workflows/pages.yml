@@ -2,10 +2,6 @@ name: Publish asset studio and library
 on:
   push:
     branches: [main]
-  workflow_run:
-    workflows: [Asset library updated]
-    types: [completed]
-    branches: [asset-library]
   workflow_dispatch:
 permissions:
   contents: read
@@ -13,10 +9,9 @@ permissions:
   id-token: write
 concurrency:
   group: little-steps-pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   build:
-    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -73,15 +68,12 @@ jobs:
             const repo = context.repo;
             const deployments = await github.rest.repos.listDeployments({...repo, environment: 'github-pages', per_page: 10});
             const oldShas = [...new Set(deployments.data.map(d => d.sha))].filter(sha => sha !== context.sha);
-            const terminal = new Set(['succeed', 'success', 'failure', 'failed', 'cancelled', 'canceled', 'deployment_failed', 'deployment_cancelled']);
             for (const sha of oldShas) {
               try {
-                const status = await github.request('GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}', {...repo, pages_deployment_id: sha});
-                if (terminal.has(status.data.status)) continue;
-                core.info(`Cancelling obsolete Pages publication ${sha}: ${status.data.status}`);
+                core.info(`Releasing obsolete Pages publication ${sha}`);
                 await github.request('POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel', {...repo, pages_deployment_id: sha});
               } catch (error) {
-                if (error.status !== 404) throw error;
+                if (![404, 409, 422].includes(error.status)) throw error;
               }
             }
       - name: Publish Pages

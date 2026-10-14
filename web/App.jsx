@@ -4,9 +4,9 @@ import Library from './Library.jsx';
 import Workbench from './Workbench.jsx';
 import UploadDialog from './UploadDialog.jsx';
 import ConnectionDialog from './ConnectionDialog.jsx';
-import {readCatalog,blankCatalog,disconnect,REPO_URL,LIBRARY_URL,PAGES_URL,CLOUD,formatBytes,LIBRARY_LIMIT} from './github.js';
+import {readCatalog,blankCatalog,disconnect,requestPublication,connected,REPO_URL,LIBRARY_URL,PAGES_URL,CLOUD,formatBytes,LIBRARY_LIMIT} from './github.js';
 
-function Storage({catalog,user,onConnect,onDisconnect,onRefresh}){
+function Storage({catalog,user,onConnect,onDisconnect,onRefresh,onPublish,publishing}){
   const unique=new Map();for(const asset of catalog.assets)for(const file of asset.files||[])unique.set(file.path,file.size||0);
   const bytes=[...unique.values()].reduce((a,b)=>a+b,0),percent=Math.min(100,bytes/LIBRARY_LIMIT*100);
   return <div className="storage-page"><div className="page-heading"><div><span className="eyebrow">A LIGHTER MAC, A SHARED LIBRARY</span><h1>素材在云端，创作更轻。</h1><p>同一个 GitHub 仓库，一个随时打开的资源平台。</p></div><button className="secondary" onClick={onRefresh}><RefreshCw size={16}/>同步目录</button></div>
@@ -14,13 +14,15 @@ function Storage({catalog,user,onConnect,onDisconnect,onRefresh}){
     <section className="storage-connection"><span className="eyebrow">WRITE ACCESS</span><h2>{user?'GitHub 已连接':'连接后开始云端保存'}</h2><p>{user?`当前账号：${user}`:'浏览和下载公开素材不需要登录。上传和保存时，请连接有仓库写入权限的 GitHub 账号。'}</p><button className={user?'secondary':'primary'} onClick={user?onDisconnect:onConnect}>{user?<LogOut size={16}/>:<Github size={16}/>} {user?'断开连接':'连接 GitHub'}</button><div className="privacy-note"><ShieldCheck size={15}/>连接令牌只留在当前页面内存中。</div></section></div>
     <section className="storage-route"><div><span className="eyebrow">HOW YOUR ASSETS TRAVEL</span><h2>只在需要时，加载你需要的素材。</h2></div><div className="storage-route-steps"><div><span><Globe size={25}/></span><h3>网页制作</h3><p>上传、模型预览、动作组合<br/>与序列帧制作</p></div><ChevronRight size={20}/><div><span><Github size={25}/></span><h3>GitHub 保存</h3><p>原文件、版本、来源记录<br/>与工作台配置</p></div><ChevronRight size={20}/><div><span><Cloud size={25}/></span><h3>Pages 发布</h3><p>自动更新预览与资源网址<br/>随时分享、加载或下载</p></div></div></section>
     <div className="storage-notes"><section><HardDrive size={21}/><div><h3>Mac 只同步代码</h3><p>资源分支没有本地检出，也不跟随代码拉取。预览与制作只使用浏览器临时内存；只有你点击下载，才保存一份副本到本机。</p></div></section><section><FolderCode size={21}/><div><h3>原工程与源码都保留</h3><p>ZIP 内的 Node、Blender、Python、CLI 和 Skill 源码保存在代码分支。当前 Pages 版无需在 Mac 启动这些服务。</p></div></section><section><Globe size={21}/><div><h3>发布有一点等待时间</h3><p>保存成功后，GitHub 会自动部署 Pages。资源库可立即读取新文件；复制的 Pages 链接在部署完成后可用。</p></div></section><section><Cloud size={21}/><div><h3>为更多素材留有后路</h3><p>Pages 站点上限为 1 GB。大文件与更大的资产库可扩展到 GitHub Releases 或对象存储，网页仍可继续使用。</p></div></section></div>
-    <div className="storage-links"><a href={REPO_URL} target="_blank" rel="noreferrer"><Github size={16}/>源码仓库<ArrowUpRight size={14}/></a><a href={LIBRARY_URL} target="_blank" rel="noreferrer"><Cloud size={16}/>资源目录<ArrowUpRight size={14}/></a><a href={`${REPO_URL}/actions`} target="_blank" rel="noreferrer"><Workflow size={16}/>发布进度<ArrowUpRight size={14}/></a></div>
+    <div className="storage-links"><a href={REPO_URL} target="_blank" rel="noreferrer"><Github size={16}/>源码仓库<ArrowUpRight size={14}/></a><a href={LIBRARY_URL} target="_blank" rel="noreferrer"><Cloud size={16}/>资源目录<ArrowUpRight size={14}/></a><a href={`${REPO_URL}/actions`} target="_blank" rel="noreferrer"><Workflow size={16}/>发布进度<ArrowUpRight size={14}/></a><button disabled={publishing} onClick={onPublish}>{publishing?<LoaderCircle className="spin" size={14}/>:<RefreshCw size={14}/>}重新发布资源</button></div>
   </div>;
 }
 export default function App(){
   const valid=['library','workbench','storage'];
   const [page,setPage]=useState(valid.includes(location.hash.slice(1))?location.hash.slice(1):'library'),[catalog,setCatalog]=useState(blankCatalog),[loading,setLoading]=useState(true),[user,setUser]=useState(''),[upload,setUpload]=useState(false),[connection,setConnection]=useState(false),[preferred,setPreferred]=useState(''),[notice,setNotice]=useState(null),[refreshing,setRefreshing]=useState(false);
   const noticeTimer=useRef(),refreshSequence=useRef(0);
+  const [publishing,setPublishing]=useState(false);
+  async function publish(){if(!connected()){setConnection(true);return;}setPublishing(true);try{await requestPublication();notify('已触发 Pages 更新，可在发布进度中查看');}catch(e){notify(e.message,'error');}finally{setPublishing(false);}}
   function notify(text,type='success'){clearTimeout(noticeTimer.current);setNotice({text,type});noticeTimer.current=setTimeout(()=>setNotice(null),6500);}
   async function refresh(silent=false){const sequence=++refreshSequence.current;if(!silent)setRefreshing(true);try{const result=await readCatalog();if(sequence===refreshSequence.current)setCatalog(result.catalog);}catch(e){if(!silent)notify(e.message,'error');}finally{if(sequence===refreshSequence.current){setLoading(false);setRefreshing(false);}}}
   useEffect(()=>{refresh();const interval=setInterval(()=>refresh(true),60000);const hash=()=>{if(valid.includes(location.hash.slice(1)))setPage(location.hash.slice(1));};addEventListener('hashchange',hash);return()=>{clearInterval(interval);clearTimeout(noticeTimer.current);removeEventListener('hashchange',hash);};},[]);
@@ -31,9 +33,9 @@ export default function App(){
     <div className="main-shell"><header className="topbar"><div className="breadcrumb"><span>创作空间</span><ChevronRight size={13}/><strong>{page==='library'?'资源库':page==='workbench'?'工作台':'云端存储'}</strong></div><div className="header-actions"><button className="refresh-button icon-button" aria-label="刷新云端资源目录" disabled={refreshing} onClick={()=>refresh()}><RefreshCw size={16} className={refreshing?'spin':''}/></button><span className="cloud-status"><span className="online-dot"/>GitHub Pages</span><button className={user?'connected-button':'github-button'} onClick={()=>user?navigate('storage'):setConnection(true)}><Github size={16}/>{user||'连接 GitHub'}{user&&<Check size={13}/>}</button></div></header><main>
       {page==='library'&&<Library catalog={catalog} loading={loading} onUpload={()=>setUpload(true)} onUse={asset=>{if(!asset.metadata?.vertices){notify('这份素材只有骨架动作，请选用带网格的模型作为制作目标','error');return;}setPreferred(asset.id);navigate('workbench');}} onNotify={notify}/>}
       {page==='workbench'&&<Workbench catalog={catalog} preferredModelId={preferred} onCatalog={setCatalog} onUpload={()=>setUpload(true)} onConnect={()=>setConnection(true)} onNotify={notify}/>}
-      {page==='storage'&&<Storage catalog={catalog} user={user} onRefresh={()=>refresh()} onConnect={()=>setConnection(true)} onDisconnect={()=>{disconnect();setUser('');notify('GitHub 已断开，当前页面不再持有令牌');}}/>}
+      {page==='storage'&&<Storage catalog={catalog} user={user} onRefresh={()=>refresh()} onConnect={()=>setConnection(true)} onPublish={publish} publishing={publishing} onDisconnect={()=>{disconnect();setUser('');notify('GitHub 已断开，当前页面不再持有令牌');}}/>}
     </main></div>
-    {upload&&<UploadDialog onClose={()=>setUpload(false)} onConnect={()=>setConnection(true)} onSaved={value=>{setCatalog(value);notify('素材已保存到 GitHub，Pages 将自动更新');}}/>}
+    {upload&&<UploadDialog onClose={()=>setUpload(false)} onConnect={()=>setConnection(true)} onSaved={result=>{setCatalog(result.catalog);notify(result.publishing==='failed'?'素材已保存到 GitHub，发布未启动；可在云端存储重新发布':'素材已保存到 GitHub，Pages 将自动更新',result.publishing==='failed'?'error':'success');}}/>}
     {connection&&<ConnectionDialog onClose={()=>setConnection(false)} onConnected={value=>{setUser(value.login);setCatalog(value.catalog);notify('GitHub 已连接，可以保存资源到云端');}}/>}
     {notice&&<div className={`toast ${notice.type==='error'?'error':''}`} role="status">{notice.type==='error'?<X size={17}/>:<Check size={17}/>}<span>{notice.text}</span><button aria-label="关闭提示" onClick={()=>setNotice(null)}><X size={15}/></button></div>}
   </div>;

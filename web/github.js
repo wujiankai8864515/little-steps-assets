@@ -64,6 +64,20 @@ async function base64(blob){
   return await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.slice(reader.result.indexOf(',')+1));reader.onerror=()=>reject(Error('读取上传内容失败'));reader.readAsDataURL(blob);});
 }
 async function head(){const ref=await api(`/git/ref/heads/${CLOUD.branch}`);const commit=await api(`/git/commits/${ref.object.sha}`);return {sha:ref.object.sha,tree:commit.tree.sha};}
+export async function requestPublication(){
+  if(!credential)throw Error('请先连接 GitHub');
+  // A tiny code-branch pointer gives each resource update its own Pages version.
+  // No model, image, frame or asset catalog is copied to the code branch.
+  for(let attempt=0;attempt<3;attempt++){
+    const ref=await api(`/git/ref/heads/${CLOUD.branch}`);
+    let previous;try{previous=await api('/contents/.github/library-state.json?ref=main');}catch(e){if(e.status!==404)throw e;}
+    if(previous?.content){try{const value=JSON.parse(atob(previous.content.replace(/\n/g,'')));if(value.libraryCommit===ref.object.sha)return {queued:true};}catch{}}
+    const body={message:`Publish cloud library ${ref.object.sha.slice(0,7)}`,branch:'main',content:await base64(new Blob([JSON.stringify({schema:1,libraryCommit:ref.object.sha,updatedAt:new Date().toISOString()},null,2)+'\n'],{type:'application/json'}))};
+    if(previous?.sha)body.sha=previous.sha;
+    try{await api('/contents/.github/library-state.json',{method:'PUT',body});return {queued:true};}
+    catch(e){if(e.status!==409||attempt===2)throw e;}
+  }
+}
 async function commitMutation(mutate,files,message,onProgress){
   if(!credential)throw Error('请先连接 GitHub，文件会直接上传到资源分支');
   for(const file of files){safePath(file.path);if(file.blob.size>FILE_LIMIT)throw Error('单个文件请控制在 40 MB 以内；大型资源适合 GitHub Releases 或对象存储');}
@@ -91,7 +105,12 @@ async function commitMutation(mutate,files,message,onProgress){
     const next=mutate(structuredClone(catalog));next.updatedAt=new Date().toISOString();
     const createdTree=await api('/git/trees',{method:'POST',body:{base_tree:current.tree,tree:[...fileEntries,{path:'catalog.json',mode:'100644',type:'blob',content:JSON.stringify(next,null,2)+'\n'}]}});
     const commit=await api('/git/commits',{method:'POST',body:{message,tree:createdTree.sha,parents:[current.sha]}});
-    try{await api(`/git/refs/heads/${CLOUD.branch}`,{method:'PATCH',body:{sha:commit.sha,force:false}});onProgress?.('已保存到 GitHub，Pages 正在更新');return {catalog:next,commit:commit.sha};}
+    try{
+      await api(`/git/refs/heads/${CLOUD.branch}`,{method:'PATCH',body:{sha:commit.sha,force:false}});
+      onProgress?.('已保存到 GitHub，正在触发 Pages 发布…');
+      try{await requestPublication();return {catalog:next,commit:commit.sha,publishing:'queued'};}
+      catch(e){return {catalog:next,commit:commit.sha,publishing:'failed',publishError:e.message};}
+    }
     catch(e){if((e.status!==409&&e.status!==422)||attempt===2)throw e;onProgress?.('资源库同时有更新，正在合并目录…');}
   }
 }
