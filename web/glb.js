@@ -41,7 +41,8 @@ function restSignature(glb){
     if(parents.has(index))matrix=world(parents.get(index)).clone().multiply(matrix);
     worlds.set(index,matrix);return matrix;
   }
-  const joints=[...new Set((glb.json.skins||[]).flatMap(s=>s.joints))];
+  let joints=[...new Set((glb.json.skins||[]).flatMap(s=>s.joints))];
+  if(!joints.length){const boneNames=nodes.flatMap(n=>n.extras?.workbenchBoneNames||[]);joints=nodes.flatMap((n,i)=>boneNames.includes(n.name)?[i]:[]);}
   const rows=joints.map(i=>({name:nodes[i].name||`node_${i}`,parent:joints.includes(parents.get(i))?nodes[parents.get(i)].name:null,world:world(i).toArray().map(n=>Math.round(n*100000)/100000)})).sort((a,b)=>a.name.localeCompare(b.name));
   return rows.length?JSON.stringify(rows):null;
 }

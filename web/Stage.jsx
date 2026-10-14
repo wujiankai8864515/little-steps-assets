@@ -18,8 +18,9 @@ export default function Stage({gltf,clipIndex=-1,frameMode=false,onControls,onPo
     const key=new THREE.DirectionalLight(0xfff7ea,3.2);key.position.set(3,6,4);scene.add(key);
     const fill=new THREE.DirectionalLight(0xe8f0ff,1.4);fill.position.set(-4,3,-2);scene.add(fill);
     const root=clone(gltf.scene);root.updateMatrixWorld(true);
-    const bounds=new THREE.Box3().setFromObject(root),size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
+    const bounds=new THREE.Box3().setFromObject(root);if(bounds.isEmpty())root.traverse(node=>bounds.expandByPoint(node.getWorldPosition(new THREE.Vector3())));const size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
     const scale=2/Math.max(size.y,size.x*.7,size.z*.7,.01),holder=new THREE.Group();holder.userData.workbenchCharacter=true;holder.add(root);holder.scale.setScalar(scale);holder.position.set(-center.x*scale,-bounds.min.y*scale,-center.z*scale);scene.add(holder);
+    let meshes=0,bones=0;root.traverse(n=>{if(n.isMesh)meshes++;if(n.isBone)bones++;});const helper=!meshes&&bones?new THREE.SkeletonHelper(root):null;if(helper){helper.material.color.set(0x7b9860);scene.add(helper);}
     if(!frameMode){const grid=new THREE.GridHelper(10,30,0xbdc8b8,0xd4dbcf);grid.material.transparent=true;grid.material.opacity=.24;scene.add(grid);}
     const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.09;controls.minDistance=.8;controls.maxDistance=25;
     const radius=Math.max(size.length()*scale/2,.6);
@@ -38,7 +39,7 @@ export default function Stage({gltf,clipIndex=-1,frameMode=false,onControls,onPo
     let frame,disposed=false,first=true,last=performance.now();
     function draw(){if(disposed)return;frame=requestAnimationFrame(draw);const now=performance.now();if(playing&&!document.hidden)mixer.update(Math.min((now-last)/1000,.1));last=now;controls.update();renderer.render(scene,camera);if(first){first=false;renderer.domElement.toBlob(blob=>{if(blob&&!disposed)callbacks.current.onPoster?.(blob);},'image/png');}}
     draw();
-    return()=>{disposed=true;cancelAnimationFrame(frame);resize.disconnect();controls.dispose();mixer.stopAllAction();mixer.uncacheRoot(root);renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();world.current=null;callbacks.current.onControls?.(null);};
+    return()=>{disposed=true;cancelAnimationFrame(frame);resize.disconnect();controls.dispose();mixer.stopAllAction();mixer.uncacheRoot(root);helper?.geometry.dispose();helper?.material.dispose();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();world.current=null;callbacks.current.onControls?.(null);};
   },[gltf,frameMode]);
   useEffect(()=>{world.current?.select(clipIndex);setPaused(false);world.current?.setPlaying(true);},[clipIndex]);
   return <div className={`model-stage ${frameMode?'frame-stage':''} ${compact?'compact':''}`}>

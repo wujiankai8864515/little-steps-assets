@@ -7,7 +7,7 @@ import {zipSync} from 'fflate';
 import {readGlb} from './glb.js';
 
 export function loader(manager){return new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder);}
-export async function parseModel(bytes){return loader().parseAsync(bytes instanceof Uint8Array?bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength):bytes,'');}
+export async function parseModel(bytes){const input=bytes instanceof Uint8Array?bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength):bytes,gltf=await loader().parseAsync(input,''),json=readGlb(input).json,boneNames=json.nodes?.flatMap(n=>n.extras?.workbenchBoneNames||[])||[];if(boneNames.length)gltf.scene.traverse(n=>{if(boneNames.includes(n.name)||boneNames.includes(n.userData.name))n.isBone=true;});return gltf;}
 export function modelInfo(gltf){
   let triangles=0,vertices=0;const bones=new Set(),images=new Set();
   gltf.scene.traverse(node=>{
@@ -19,7 +19,9 @@ export function modelInfo(gltf){
 }
 export function disposeModel(scene){scene?.traverse(node=>{node.geometry?.dispose();for(const mat of Array.isArray(node.material)?node.material:[node.material])if(mat){for(const v of Object.values(mat))if(v?.isTexture)v.dispose();mat.dispose();}});}
 export async function importModel(files){
-  const list=Array.from(files),primary=list.find(f=>/\.(glb|gltf|fbx)$/i.test(f.name));
+  const supplied=Array.from(files);
+  if(supplied.some(f=>(f.webkitRelativePath||f.name).split('/').some(part=>/^\.env(?:\.|$)|^credentials\.json$|\.(pem|key)$/i.test(part))))throw Error('所选文件夹包含私有配置，请选择只含模型与贴图的目录');
+  const list=supplied.filter(f=>!(f.webkitRelativePath||f.name).split('/').some(part=>['.git','node_modules','.DS_Store','Thumbs.db'].includes(part))),primary=list.find(f=>/\.(glb|gltf|fbx)$/i.test(f.name));
   if(!primary)throw Error('请选择 GLB、FBX 或包含 glTF 的完整文件夹');
   const urls=new Map(),paths=new Map();
   for(const file of list){const path=file.webkitRelativePath||file.name;paths.set(path,file);}
@@ -45,6 +47,7 @@ export async function importModel(files){
     }else{
       const scene=new FBXLoader(manager).parse(bytes,'');
       if(started)await completedLoads;if(loadError)throw loadError;gltf={scene,animations:scene.animations||[]};
+      const boneNames=[];scene.traverse(n=>{if(n.isBone&&n.name)boneNames.push(n.name);});scene.userData.workbenchBoneNames=boneNames;
       bytes=await new GLTFExporter().parseAsync(scene,{binary:true,animations:gltf.animations,onlyVisible:false,includeCustomExtensions:true});
     }
     let original=null;
