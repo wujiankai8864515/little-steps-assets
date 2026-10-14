@@ -1,0 +1,13 @@
+name: Asset library updated
+on:
+  push:
+    branches: [asset-library]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  signal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify protected Pages publisher
+        run: echo 'Cloud asset catalog changed. The protected main workflow publishes the website and resources.'
