@@ -7,13 +7,13 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDERS = ("src", "server", "shared", "worker", "scripts", "skill", "docs")
+FOLDERS = ("src", "web", "server", "shared", "worker", "scripts", "skill", "docs", ".github")
 ROOT_FILES = (".gitignore", "AGENTS.md", "README.md", "package.json",
-              "package-lock.json", "index.html", "vite.config.mjs", "start.ps1",
+              "package-lock.json", "pnpm-lock.yaml", "index.html", "vite.config.mjs", "vite.pages.config.mjs", "start.ps1",
               "启动资产工坊.cmd")
 EXTENSIONS = {".md", ".txt", ".json", ".js", ".mjs", ".cjs", ".jsx",
-              ".ts", ".tsx", ".css", ".html", ".py", ".ps1", ".cmd"}
-EXCLUDED_DIRS = {"data", "dist", "node_modules", ".git", "__pycache__",
+              ".ts", ".tsx", ".css", ".html", ".py", ".ps1", ".cmd", ".yaml", ".yml"}
+EXCLUDED_DIRS = {"data", "library", "assets", "migration", "dist", "node_modules", ".git", "__pycache__",
                  ".pytest_cache", ".cache", ".venv", "venv"}
 EXCLUDED_FILES = {"workbench.json", "credentials.json", "service.json",
                   "service-management.lock"}

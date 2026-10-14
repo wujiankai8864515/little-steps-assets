@@ -1,0 +1,61 @@
+name: Publish asset studio and library
+on:
+  push:
+    branches: [main, asset-library]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: little-steps-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: code
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: asset-library
+          path: cloud-library
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+          package_json_file: code/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: code/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+        working-directory: code
+      - run: pnpm run build:pages
+        working-directory: code
+      - name: Add cloud resources without storing them on the Mac
+        run: |
+          mkdir -p code/dist/library
+          cp cloud-library/catalog.json code/dist/library/catalog.json
+          if [ -d cloud-library/assets ]; then cp -R cloud-library/assets code/dist/library/assets; fi
+          touch code/dist/.nojekyll
+          du -sh code/dist
+          test "$(du -sb code/dist | cut -f1)" -lt 1000000000
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: code/dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

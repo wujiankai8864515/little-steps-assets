@@ -308,5 +308,19 @@
       "收费": false,
       "修改资产": "复制恢复/改绑定，保留原库"
     }
-  ]
+  ],
+  "currentDeployment": {
+    "mode": "github-pages",
+    "site": "https://wujiankai8864515.github.io/little-steps-assets/",
+    "sourceBranch": "main",
+    "remoteAssetBranch": "asset-library",
+    "localAssets": false,
+    "readOnlyCli": {
+      "list": "node scripts/cloud.mjs list",
+      "inspect": "node scripts/cloud.mjs inspect ASSET_ID",
+      "url": "node scripts/cloud.mjs url ASSET_ID"
+    },
+    "legacyCommands": "local backend only",
+    "currentSpec": "docs/Pages云端方案.md"
+  }
 }

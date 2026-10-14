@@ -1,5 +1,18 @@
 # 资产工坊
 
+## 当前默认入口：GitHub Pages（2026-10-14）
+
+打开 https://wujiankai8864515.github.io/little-steps-assets/ 。代码与资源位于同一公开仓库的不同分支，Mac 只同步代码。资源库初始为空。网页支持导入、卡片预览、同骨架动作组合、浏览器出帧及直接云端保存。
+
+首次保存请在网页连接 GitHub，按界面选择本仓库 Contents 读写权限；令牌只在页面内存中使用。原 ZIP 源码完整保留，历史 Windows 路径和资源记录不代表当前资产库已含有这些文件。当前云端方案和边界以 [Pages 云端方案](docs/Pages云端方案.md) 为准。
+
+- 维护：`pnpm run dev:pages` / `pnpm run build:pages`。
+- 只读云端目录：`node scripts/cloud.mjs list`，不会下载资源。
+- 资源分支：`asset-library`；不要向 Mac 克隆或合并该分支。
+- Pages 上限 1 GB，当前素材预算 900 MB、单文件 40 MB。Lux3D 收费生成和云端 Blender 尚未接入本版。
+
+以下保留原本机版本的使用和历史说明。
+
 本地中文资产工作台。网页与 Codex 共用文件、资产目录和持久任务，不需要 GPT API。
 
 **当前使用入口**：[中文新手开始](skill/references/新手开始.md)、[能力索引](skill/references/索引.md)、[路径/打开/迁移](skill/references/运行与迁移.md)。完整现状与待办看 [系统全景](docs/系统全景与实施路线.md)，本次三个视角的审核与取舍看 [审核处理](docs/三视角审核与采纳.md)。

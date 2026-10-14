@@ -2,3 +2,10 @@ node_modules/
 dist/
 data/
 *.log
+.DS_Store
+.env
+.env.*
+!.env.example
+library/
+assets/
+migration/
