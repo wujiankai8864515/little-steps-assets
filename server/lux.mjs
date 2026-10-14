@@ -1,0 +1,8 @@
+import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import {spawn} from 'node:child_process';import {createInterface} from 'node:readline';import {ROOT,uid} from './store.mjs';
+export const runtime=process.env.LUX3D_SKILL_ROOT||path.join(os.homedir(),'.codex/plugins/cache/openai-curated-remote/aholo-lux3d/0.1.1/skills/lux3d');
+export const luxPython=path.join(os.homedir(),'.cache/aholo-lux3d/python-3.11/Scripts/python.exe');
+let child;const pending=new Map;export function available(){return fs.existsSync(luxPython)&&fs.existsSync(runtime);}
+export function rpc(cmd,args){if(!available())return Promise.reject(Error('Lux3D 私有运行环境尚未就绪，请运行官方 setup_runtime.py'));if(!child){child=spawn(luxPython,['-u',path.join(ROOT,'worker/lux3d_daemon.py'),runtime],{windowsHide:true,env:{...process.env,PYTHONIOENCODING:'utf-8'}});createInterface({input:child.stdout}).on('line',l=>{try{const d=JSON.parse(l),p=pending.get(d.id);if(p){clearTimeout(p.timer);pending.delete(d.id);d.error?p.reject(Error(d.error)):p.resolve(d.result);}}catch{}});child.stderr.on('data',()=>{});const stop=()=>{child=null;for(const p of pending.values()){clearTimeout(p.timer);p.reject(Error('Lux3D 适配器停止，未提交报价需刷新；提交结果请核对原任务'));}pending.clear();};child.on('exit',stop);child.on('error',stop);}
+ return new Promise((resolve,reject)=>{const id=uid(),timer=setTimeout(()=>{pending.delete(id);reject(Error('平台响应超时；提交结果未知时不会自动重试'));},180000);pending.set(id,{resolve,reject,timer});child.stdin.write(JSON.stringify({id,cmd,args})+'\n');});}
+export function closeLux(){child?.kill();}
+process.on('exit',closeLux);

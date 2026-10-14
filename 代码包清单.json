@@ -1,0 +1,689 @@
+{
+  "format": "asset-workbench-code-only-v1",
+  "createdAt": "2026-10-09T20:00:46.833414+08:00",
+  "includesAssets": false,
+  "includesCredentials": false,
+  "includesMachineBinding": false,
+  "includesDependencies": false,
+  "includesBuild": false,
+  "excludedDirectories": [
+    ".cache",
+    ".git",
+    ".pytest_cache",
+    ".venv",
+    "__pycache__",
+    "data",
+    "dist",
+    "node_modules",
+    "venv"
+  ],
+  "excludedFiles": [
+    "credentials.json",
+    "service-management.lock",
+    "service.json",
+    "workbench.json"
+  ],
+  "otherSkippedFiles": [],
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 32,
+      "sha256": "c0356fe9f98bf46e4f242980b7443cc105f502ea0acc1821996cf9f1996e7a3a"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 3643,
+      "sha256": "09c17f71d8185c19af0d6aa2d570ee4b2d7f6e0c3cff76f76b7109771e0c91c3"
+    },
+    {
+      "path": "docs/licenses/react-flow.txt",
+      "bytes": 1179,
+      "sha256": "454168b6d8e29518cf5fc0ca3f5e27d390f66559c826007b3bd68155d67f9db4"
+    },
+    {
+      "path": "docs/licenses/shadcn.txt",
+      "bytes": 1225,
+      "sha256": "be986df35fa0049a02f3cbc03984f5942d1d291b9d1047baaead85462c0e6459"
+    },
+    {
+      "path": "docs/Skill服务审核处理.md",
+      "bytes": 1767,
+      "sha256": "bd153ca86b13ea6bb4ab859e7ee5296fbfa68b1c24f7b83c6a567a8ccdd5f913"
+    },
+    {
+      "path": "docs/Skill服务方案.md",
+      "bytes": 8460,
+      "sha256": "28ee0ce611a7903c6e7eda79382d8ae726f2b9f013ca208842fb22abc7d952ea"
+    },
+    {
+      "path": "docs/source-licenses/fflate-MIT.txt",
+      "bytes": 1069,
+      "sha256": "0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551"
+    },
+    {
+      "path": "docs/source-licenses/Quaternius-Animation-Library.txt",
+      "bytes": 332,
+      "sha256": "6d01f55c6e4c49a2c9963e147e561945ae2c83958c8ca667d90a6bffdbfac061"
+    },
+    {
+      "path": "docs/source-licenses/Quaternius-Base-Characters.txt",
+      "bytes": 806,
+      "sha256": "0f4beaf0fe360a7732e58bbe3dbf60a2422367fbea60cb9ea4add968f383268e"
+    },
+    {
+      "path": "docs/source-licenses/three-MIT.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "path": "docs/三视角审核与采纳.md",
+      "bytes": 5689,
+      "sha256": "89141cbe1d815bf29d457a0a687bcf0c0ec5561943f6e328e57bb2fb00488e71"
+    },
+    {
+      "path": "docs/伪代码.md",
+      "bytes": 3870,
+      "sha256": "dbbca759d0f134969ef9cbb1d52b8d8e3e7897a79b176490a677f4220d3c1a83"
+    },
+    {
+      "path": "docs/动作备选与长期复用.md",
+      "bytes": 3824,
+      "sha256": "bd1bc116c54ecf0a5b778dab2b5793a99ad18a79e3b658b8fa460482156cfea4"
+    },
+    {
+      "path": "docs/实施进度.md",
+      "bytes": 20387,
+      "sha256": "1d91f457021dce88e5d1ccb24d7f2d0b0148c21f437821488ce84303f2f77d31"
+    },
+    {
+      "path": "docs/审核处理.md",
+      "bytes": 2098,
+      "sha256": "2f1c331e085c23bc394f62b015e86a23f77914babaeb73ef86bf56ef00caabb3"
+    },
+    {
+      "path": "docs/成熟工具调研.md",
+      "bytes": 4505,
+      "sha256": "8a6776ebb92b50f02cd72e463ed0d47edfd704ba51e2341655f17c0e9c67c0b3"
+    },
+    {
+      "path": "docs/方案.md",
+      "bytes": 7176,
+      "sha256": "95f8567e5bd48fb23eeefadd4b44158f4dfef200718bb73bd1003ae4de63a43e"
+    },
+    {
+      "path": "docs/来源许可.md",
+      "bytes": 1958,
+      "sha256": "1e8cbfc1590e21a85fd4f2b331a99851237fc2e1222754af0595071b90c27637"
+    },
+    {
+      "path": "docs/界面方案.md",
+      "bytes": 3617,
+      "sha256": "5181d82f5dc50d3744a6e111e2aebeb41300faaaad4b2dfac7672d1509f766fc"
+    },
+    {
+      "path": "docs/系统全景与实施路线.md",
+      "bytes": 36643,
+      "sha256": "86f555f252590390ebee2f1a5a39418a01b3e4c8ede666e7bc54992558733391"
+    },
+    {
+      "path": "docs/纯代码迁移说明.md",
+      "bytes": 8042,
+      "sha256": "bdf89dcd5e23f4f24bbcdb371361d1ea6ef20bfc36b8d3e9eddcbe42ce69cbed"
+    },
+    {
+      "path": "index.html",
+      "bytes": 282,
+      "sha256": "00e4522305d8c3eaa063137b380c2100f80ee7ebf4a13004fe37a557f9068fae"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 114719,
+      "sha256": "60ee3061a80010a3e5da2f957ee65de00ce21cb61697fd36b1f266b6b1b6ce35"
+    },
+    {
+      "path": "package.json",
+      "bytes": 885,
+      "sha256": "a19dec367d7b9684a29c07cbf2396f397266e94ca7310a3a386e176fdff02f09"
+    },
+    {
+      "path": "README.md",
+      "bytes": 9349,
+      "sha256": "9b02dd036f53c43aa7fc6d6161d84809b5e1e676fc629891fefeef35a2f26376"
+    },
+    {
+      "path": "scripts/archive_delivery.py",
+      "bytes": 5931,
+      "sha256": "be7e015957df0c4d0d8e6d21ba9011320515fdd9528e35e2e7e97114cd498bfc"
+    },
+    {
+      "path": "scripts/capture_motion_comparison.mjs",
+      "bytes": 3009,
+      "sha256": "04fa759629bc3ec3ef32029cce5f385feb9b133ee93dcc8daafc695329f108ee"
+    },
+    {
+      "path": "scripts/capture_production_flows.mjs",
+      "bytes": 3282,
+      "sha256": "6d6d4496041bdbbd573377abaed37df578741fefea6fc10a81c7c797efe59959"
+    },
+    {
+      "path": "scripts/capture_studio.mjs",
+      "bytes": 1770,
+      "sha256": "f04336b3fa9fe7f6f67712af49c971fed0a2f7eda5ecbe113df912b357cacb4b"
+    },
+    {
+      "path": "scripts/cli.mjs",
+      "bytes": 505,
+      "sha256": "91e59eb095ff7ed053abebb6a015f26701519404f577acff3624299383f5b93e"
+    },
+    {
+      "path": "scripts/client.mjs",
+      "bytes": 1184,
+      "sha256": "2faf74da47caa37652dbc809a1888a28e6bbe8b326b83c608a29f1baa183510e"
+    },
+    {
+      "path": "scripts/command-definitions.mjs",
+      "bytes": 2705,
+      "sha256": "4c9e6802d341c5fe748fdc2991364f607546eeb6e4eaa619cfc33f4f738581e0"
+    },
+    {
+      "path": "scripts/fix_operative_material.mjs",
+      "bytes": 1264,
+      "sha256": "feda8d7a763fcfc9e6717f55dcc56f277f687c41d8006840661bb97ad9c0f42d"
+    },
+    {
+      "path": "scripts/install-skill.ps1",
+      "bytes": 2819,
+      "sha256": "9405291d9caf60602043704df261d26fe3d9356cbaf4f7c9d80d90a8c2eea191"
+    },
+    {
+      "path": "scripts/make_asset_posters.mjs",
+      "bytes": 1450,
+      "sha256": "26c8d499cf119602f8d1f447e4cc9ea66102f12a6847fb338c08b66b16e8cf92"
+    },
+    {
+      "path": "scripts/mcp.mjs",
+      "bytes": 1877,
+      "sha256": "08bcf7b6ec3d186b67820f7b048a23d7cff10e286074f28cc11d996108f3d693"
+    },
+    {
+      "path": "scripts/package-code.py",
+      "bytes": 5138,
+      "sha256": "1718b1c9e114679ae1d41081c77ddea94f1331fdfb3036137843ed5f36197a23"
+    },
+    {
+      "path": "scripts/seed.mjs",
+      "bytes": 2924,
+      "sha256": "4ade1eb30a5ae9f67daf9d40e1239b5dc27f98ca0959d4a2f131abec1bb8e870"
+    },
+    {
+      "path": "server/animation-clip.mjs",
+      "bytes": 1907,
+      "sha256": "3ed263ac95f2de1c00f36043cacba3828823f687be0269639c086cdd246af99e"
+    },
+    {
+      "path": "server/asset-covers.mjs",
+      "bytes": 1239,
+      "sha256": "0a534ac4a3e2abbea810ace37ff27b1af73835dd2c366855ebe1c41477e6debb"
+    },
+    {
+      "path": "server/asset-flow.mjs",
+      "bytes": 6525,
+      "sha256": "4e37d586c9528a95a33058246822fd016cda644c2676290ab122be66f5336ddd"
+    },
+    {
+      "path": "server/asset-plan.mjs",
+      "bytes": 5705,
+      "sha256": "df95f1036d7fdcdfcb5c4b483e8c537ad093e32143e8508f6f35854770694979"
+    },
+    {
+      "path": "server/asset-roles.mjs",
+      "bytes": 2003,
+      "sha256": "b1717e8c2a91c427a08284798413750106097334d75ff032ae0509a93a6ae427"
+    },
+    {
+      "path": "server/catalog.mjs",
+      "bytes": 9151,
+      "sha256": "0c0c0a567614ca3cbe8a1cbc45ef548d70d2cf40d8068715a1ad9052dda4f448"
+    },
+    {
+      "path": "server/frame-presets.mjs",
+      "bytes": 2395,
+      "sha256": "9bb7708b00f2debda2b2b4018f0cbccb9e02fd376b3f7cdc7d866f7dc7265ee3"
+    },
+    {
+      "path": "server/frame-review.mjs",
+      "bytes": 5697,
+      "sha256": "025741935eb2b73101c95bd7b125df70b608c936d15775ef97b0073a18175657"
+    },
+    {
+      "path": "server/generation-draft.mjs",
+      "bytes": 2461,
+      "sha256": "f36972fbc00d17b27c9e5cad0dce8b572a3b7fe2b2d27fd0675904b6b1282d12"
+    },
+    {
+      "path": "server/glb.mjs",
+      "bytes": 7046,
+      "sha256": "828f3200cd0ac6a59539a20ab261a7cda6891e2cfbe65c4ddd937f8344f88d1f"
+    },
+    {
+      "path": "server/handoff.mjs",
+      "bytes": 5316,
+      "sha256": "c310d9d2cca5baf1155e3bc08da560d5c6203d17834455cf8d3537f92a382c3d"
+    },
+    {
+      "path": "server/index.mjs",
+      "bytes": 26197,
+      "sha256": "84715c14942f0d5080e3979d003dd022f6861d44fd4c9b77d37248d56ea2258d"
+    },
+    {
+      "path": "server/jobs.mjs",
+      "bytes": 18404,
+      "sha256": "3a45a3a05005df907f014ec71b10ab3c54225d3daf24da586e49065054158753"
+    },
+    {
+      "path": "server/library-catalog.mjs",
+      "bytes": 2732,
+      "sha256": "ddb9ff4221894f8b8c01205f519f46f31ca4394ea1be3f03d8db34ba05f64220"
+    },
+    {
+      "path": "server/lux.mjs",
+      "bytes": 1724,
+      "sha256": "808f835f0df2d0c54604aedd6d97db78ea315032c9cd1626b242d9b7cee7b59a"
+    },
+    {
+      "path": "server/model-names.mjs",
+      "bytes": 800,
+      "sha256": "b8cd23acdafa17419a505b0ffc90574dd137d5fc47a35153ea7a8d0bb867ce00"
+    },
+    {
+      "path": "server/motion-fit.mjs",
+      "bytes": 1835,
+      "sha256": "1460922c40181ffa381385872204c8c5326af404f87903fbd90bf1e2584ab63a"
+    },
+    {
+      "path": "server/motion-preview-worker.mjs",
+      "bytes": 1188,
+      "sha256": "71fb2ed4f617542bd0d07b86e8ed2623e739e3f6d6c41c73213974e44cc29ac2"
+    },
+    {
+      "path": "server/motion-previews.mjs",
+      "bytes": 4404,
+      "sha256": "568aae8bcddff1329071e2bac84d4549bfbc22028d4898f7253d47299f51fe8c"
+    },
+    {
+      "path": "server/onion-preview.mjs",
+      "bytes": 3758,
+      "sha256": "82b6328a99667d9b5fec6f22a900a2fa0310d5f1ff5bd77af5cfb123a33ff1df"
+    },
+    {
+      "path": "server/plan-key.mjs",
+      "bytes": 245,
+      "sha256": "1306cd93f6d69bb99a8ecd74f396aa88327c3cc8ba7e3839b6c463fa222ff3f7"
+    },
+    {
+      "path": "server/render-view.mjs",
+      "bytes": 3840,
+      "sha256": "f66158ba63e1102719eed4ee965753e1a08314b04ff79a323c6ed427ff126fe1"
+    },
+    {
+      "path": "server/retarget.mjs",
+      "bytes": 8012,
+      "sha256": "e30d94142db662b4e6666873c17ab7396cf4b57c27e73a2fd1e5616ba1272bbc"
+    },
+    {
+      "path": "server/rigging.mjs",
+      "bytes": 5044,
+      "sha256": "33f25f65587da9e695ffa00f0673239795f8ab981585d1a7dd7d1955c434799e"
+    },
+    {
+      "path": "server/service-lifecycle.mjs",
+      "bytes": 1912,
+      "sha256": "b035fe68ef509ebb86a1b663c1199cc5c9309bc258291f87ab1505a7817a6b06"
+    },
+    {
+      "path": "server/sprite-download.mjs",
+      "bytes": 2320,
+      "sha256": "e41fdb89ba63fa669a25885020d159ff8903d72ea0ed1e9d7efd86a219d1e4f4"
+    },
+    {
+      "path": "server/sprite-sets.mjs",
+      "bytes": 4653,
+      "sha256": "984978f283e0a4d5def54649e1e4a040b3a1f1708791549cd0784bbbbc37f9fd"
+    },
+    {
+      "path": "server/store.mjs",
+      "bytes": 1905,
+      "sha256": "7d9a13886afbea8aaf7658aa09fe039df0ae5823cf4d3fd666504da2ba9aaf73"
+    },
+    {
+      "path": "server/workspace-draft.mjs",
+      "bytes": 4039,
+      "sha256": "3d01c62db480cc2109b33501dfc5eb8d1a668f1ae99bb094db601657b8f5a430"
+    },
+    {
+      "path": "server/workspace-selection.mjs",
+      "bytes": 8213,
+      "sha256": "1d3d11a18541118bd2e17236a752e6b6c69bfb457720d2a2af749524b38c7888"
+    },
+    {
+      "path": "shared/asset-roles.mjs",
+      "bytes": 709,
+      "sha256": "24c0895039b0899a70382638a470490781f28568862ea52d5348f201d81054ce"
+    },
+    {
+      "path": "shared/model-library.mjs",
+      "bytes": 1148,
+      "sha256": "c702bfdb656b5a9859123e6b4d348ccfd1dad46dd035d0ab7fa8a06e1c9c2b8e"
+    },
+    {
+      "path": "shared/model-name.mjs",
+      "bytes": 391,
+      "sha256": "7c535afa7d4afb488ad8419d929be1a10008894bf7b3a3ab6790464483f9e87b"
+    },
+    {
+      "path": "shared/motion-catalog.mjs",
+      "bytes": 2898,
+      "sha256": "2c9f606d755df946a9c7ed77f8a292667233e413353b6004caff9664d4552d08"
+    },
+    {
+      "path": "shared/motion-labels.mjs",
+      "bytes": 4576,
+      "sha256": "3278dcf81894ac4c3668c8c3c81fc921657100c815490cf73b7b97067ac8d45a"
+    },
+    {
+      "path": "shared/motion-provenance.mjs",
+      "bytes": 2062,
+      "sha256": "ad4dbd025879fbae20a9ff0d82b1c90cfd026bca18fc8c17c3cadc596742185b"
+    },
+    {
+      "path": "shared/render-contract.mjs",
+      "bytes": 136,
+      "sha256": "d0443db95dc99a15ca6f833c0926a6c949f9a83a00136a3691eb020c643cf7a8"
+    },
+    {
+      "path": "skill/references/asset-map.md",
+      "bytes": 5560,
+      "sha256": "c3a8f6d3ce14da9e4bf86ec26ea37c5a36a9a4fc8b4fe48f8faff22f8292d84f"
+    },
+    {
+      "path": "skill/references/gameplay-workflow.md",
+      "bytes": 5213,
+      "sha256": "83426085e582ca9b21a22db682732e1cb2f24921d16a6871612fc70e14b2464e"
+    },
+    {
+      "path": "skill/references/operations.md",
+      "bytes": 14622,
+      "sha256": "588dbcc0ee7cf50b1880356f1eb96fa3dbe3cfd12c9871bbf699f2c94946bb67"
+    },
+    {
+      "path": "skill/references/三视角审核与采纳.md",
+      "bytes": 5689,
+      "sha256": "89141cbe1d815bf29d457a0a687bcf0c0ec5561943f6e328e57bb2fb00488e71"
+    },
+    {
+      "path": "skill/references/交接与续作.md",
+      "bytes": 3481,
+      "sha256": "02203513d365b8b5ac2a1d8d5eb201f1f10143f7b996bf50f4ffedb2314d333c"
+    },
+    {
+      "path": "skill/references/序列帧与校对.md",
+      "bytes": 5800,
+      "sha256": "47a23b24081fcc7e13cd96fd9016fa797c7e271afa51e384bb47b17d47b88f78"
+    },
+    {
+      "path": "skill/references/新手开始.md",
+      "bytes": 4161,
+      "sha256": "60650e9d776db6f52c761e4623fac46af300bf5fda485b783c7a66a2d76fbcd7"
+    },
+    {
+      "path": "skill/references/模型与动作.md",
+      "bytes": 7869,
+      "sha256": "c3843f9826863b254ef635989b5ef948165068fab880c04c7e45523f2b28536b"
+    },
+    {
+      "path": "skill/references/系统总览.md",
+      "bytes": 36643,
+      "sha256": "86f555f252590390ebee2f1a5a39418a01b3e4c8ede666e7bc54992558733391"
+    },
+    {
+      "path": "skill/references/索引.md",
+      "bytes": 3682,
+      "sha256": "3fc5455bfd341896d8d17f3f3323f855263b1e9b8322650ff91640c29a1ed2fd"
+    },
+    {
+      "path": "skill/references/能力索引.json",
+      "bytes": 10990,
+      "sha256": "d398dda74a24d5574ab0a8321614bd1a0b5465b8d7b6e78e79d2d842804e4513"
+    },
+    {
+      "path": "skill/references/资产工作流.md",
+      "bytes": 9567,
+      "sha256": "217e32d02a5736994cd690fe169151edefaf133229a40fdc01018426e40ccdd8"
+    },
+    {
+      "path": "skill/references/运行与迁移.md",
+      "bytes": 6599,
+      "sha256": "adbf36ccc1cf77e4171f3acc9c29e524b44995afbb061377e5855aa94ca6b5d6"
+    },
+    {
+      "path": "skill/scripts/workbench.mjs",
+      "bytes": 972,
+      "sha256": "212a0ffacd38a2bac431902b29a422ddd3844e07c50f05a429939c5585fc966d"
+    },
+    {
+      "path": "skill/scripts/迁移资产库.py",
+      "bytes": 9706,
+      "sha256": "095e57778773931c716e4956d17df1a8ecc82e626a2af4548318bf5cc2fb4397"
+    },
+    {
+      "path": "skill/scripts/运行管理.mjs",
+      "bytes": 11685,
+      "sha256": "02b85d97aa0fbf240abeeb52d075456d0c24dfa6a12edd92533cf86c9ba7dc0f"
+    },
+    {
+      "path": "skill/SKILL.md",
+      "bytes": 6401,
+      "sha256": "5abc876bcb449a9698691b34d8d93cc236019135d91ec58f0aa1ae799e58a83e"
+    },
+    {
+      "path": "src/asset-flow.css",
+      "bytes": 11544,
+      "sha256": "fe100e6e57e5faa163ff83ff834dd573b5ec4984d2adcf32d15fe71e629232ee"
+    },
+    {
+      "path": "src/asset-library.css",
+      "bytes": 7735,
+      "sha256": "151eaec57a78a608ef2aeb8baa68ed2b1b6849390a6d5401fb71b1638c9ddba3"
+    },
+    {
+      "path": "src/AssetFlow.jsx",
+      "bytes": 34917,
+      "sha256": "9442cbf20252a3b7541c4f4b9cd591f5932d9ca182e935c7cb97f185b0eb4471"
+    },
+    {
+      "path": "src/AssetLibrary.jsx",
+      "bytes": 10590,
+      "sha256": "0e61b6da01273d3080eaabf9f649586ddf841be5d3acaa81e95f036b9871ddac"
+    },
+    {
+      "path": "src/capture-view.js",
+      "bytes": 2633,
+      "sha256": "649b34685f6f82db23303ad8e0fb7b6bef4e76d88ce9f82ffa26e6521c7dc5eb"
+    },
+    {
+      "path": "src/CapturePage.jsx",
+      "bytes": 1848,
+      "sha256": "624f9bffac8bc00bdaae6255f9d420c54330afe1e29f0642540a3ac15c5c5f54"
+    },
+    {
+      "path": "src/components/ui.jsx",
+      "bytes": 3334,
+      "sha256": "aa2f38fb6948706eb6c43c75b172aec5f97ff14fb6eb414696961f1a07029fb6"
+    },
+    {
+      "path": "src/frame-review.css",
+      "bytes": 4681,
+      "sha256": "3baecaca10cda93a1ff5028bc57fd7bf5a597141868afd2512bd96f606f15e9b"
+    },
+    {
+      "path": "src/FrameReviewDrawer.jsx",
+      "bytes": 6428,
+      "sha256": "7ef782a8185d293f576114e278206088e52f3dd0d128a0ea0d4b4a5a13fb6263"
+    },
+    {
+      "path": "src/FrameWorkbench.jsx",
+      "bytes": 12639,
+      "sha256": "f42620537b10c60945a8df64b47fc24ca63bc5e4aa8727cf3ee8f5d5b2a21d9c"
+    },
+    {
+      "path": "src/generation-memory.js",
+      "bytes": 2559,
+      "sha256": "f10b40d734f2a9d88e0a38b16bf7f1eaaf91e3f7f763a9d5acef5d4744cebf58"
+    },
+    {
+      "path": "src/GenerationForm.jsx",
+      "bytes": 4209,
+      "sha256": "a7643a825a2371ef52dba4f10392fec9b99e685adbe51b16c5ce538839e88744"
+    },
+    {
+      "path": "src/main.jsx",
+      "bytes": 23518,
+      "sha256": "b3e94cb143beadebb3c8c61325f671e09fbebbf89658f3ebad18326c1f9c3178"
+    },
+    {
+      "path": "src/MixamoDrawer.jsx",
+      "bytes": 7947,
+      "sha256": "b432400643dd76aee2f1b73fc21fe24ae4147acd92adfe2f108850d387cd49b8"
+    },
+    {
+      "path": "src/ModelActionsDrawer.jsx",
+      "bytes": 1634,
+      "sha256": "f9f546e6246347024bd760192a798b2503e0590129771114f86e65e87e259207"
+    },
+    {
+      "path": "src/ModelImportForm.jsx",
+      "bytes": 2838,
+      "sha256": "f105c27166e4516789546f7287f44aa648f604836d50093b7f1475175eb51037"
+    },
+    {
+      "path": "src/motion-catalog.js",
+      "bytes": 47,
+      "sha256": "7fbaf5c801edeaf5afec670f66783b9148acb96556e57a81a74128ad6efcb1de"
+    },
+    {
+      "path": "src/motion-labels.js",
+      "bytes": 46,
+      "sha256": "0321e5a195f442458c37305870f3247a71d7ecf14106a2efd76a0e625fcc2b22"
+    },
+    {
+      "path": "src/motion-preview.css",
+      "bytes": 7630,
+      "sha256": "46d343db108fa77d730ddbf395731adf05ba286fa3026663c23824b25c6acbc0"
+    },
+    {
+      "path": "src/MotionWorkbench.jsx",
+      "bytes": 15549,
+      "sha256": "cd590aff473f1795b734df73130347ca47286b5dbac7bf283c4e473f87ae76cf"
+    },
+    {
+      "path": "src/OnionPlayer.jsx",
+      "bytes": 10613,
+      "sha256": "b45dc07239350757e01412589395f2dcf4a34aeccde82f68703fdfdfeb20366e"
+    },
+    {
+      "path": "src/production-flows.css",
+      "bytes": 7774,
+      "sha256": "d9deb95cc4c56ad1a0a1f8f5fe73992e43e8ed3762020a150cd5f17d31fcac37"
+    },
+    {
+      "path": "src/simple.css",
+      "bytes": 6515,
+      "sha256": "e594b7aa6e76c6b99aff2e79c9d175ca1a4119532e53da698ecece2e3175b930"
+    },
+    {
+      "path": "src/SimpleApp.jsx",
+      "bytes": 17102,
+      "sha256": "a1c44fcf1dd20b91b4ebf8c82c1d6c5d0f7a6e5fd6d1790a8bf7bbf9529405b2"
+    },
+    {
+      "path": "src/studio.css",
+      "bytes": 28246,
+      "sha256": "e60b7edeca67c8c77e65ae3d486ded43dd6595e442a32a85f40a77c951034c74"
+    },
+    {
+      "path": "src/style.css",
+      "bytes": 16241,
+      "sha256": "66cddb727c5078415800b26e0cfa868cff63aca747362391820849629a221700"
+    },
+    {
+      "path": "src/Viewer.jsx",
+      "bytes": 16380,
+      "sha256": "29b3cf299b64e432df78ca51f28e79f3d0c07b9f168ba48b55f0cfaba3567826"
+    },
+    {
+      "path": "src/workspace-memory.js",
+      "bytes": 2437,
+      "sha256": "285a91aae26bdfb4d7473652eb8885463b0a0fa3a89f980f24a15e21c492790a"
+    },
+    {
+      "path": "start.ps1",
+      "bytes": 605,
+      "sha256": "70b652871ce90887aaf3708b4728f004d9fece9b4c4400d470972a686b345272"
+    },
+    {
+      "path": "vite.config.mjs",
+      "bytes": 183,
+      "sha256": "cc6cb576a4e94f7591c6186d8c14dda76fa53e23b1e9800a9d23d6358871168b"
+    },
+    {
+      "path": "worker/asset_posters.py",
+      "bytes": 3697,
+      "sha256": "3659ecdbe1eb17fd2bd6ab7655c6041918769f6261cd17e4256d70066e15a5b0"
+    },
+    {
+      "path": "worker/blender_job.py",
+      "bytes": 8631,
+      "sha256": "27e6e72b136ebd4c15738c629be706b2e0c1bc86812e6580490fe130a201fefe"
+    },
+    {
+      "path": "worker/capture_frames.mjs",
+      "bytes": 3650,
+      "sha256": "5b5c9a5f9bacef0ca2cb21cea181bbd2894d9b3d3b701856fbeeff055d896702"
+    },
+    {
+      "path": "worker/lux3d_daemon.py",
+      "bytes": 3566,
+      "sha256": "f666639fadfc409c0a42aa9d73fb1ca1935d59fd7a7539698f89572bd686f694"
+    },
+    {
+      "path": "worker/make_view_gif.py",
+      "bytes": 1949,
+      "sha256": "cdc3327d5e7141552bda499b27336a9a8be8da07790fcbe57105a6636a47cffb"
+    },
+    {
+      "path": "worker/pack_frames.py",
+      "bytes": 2271,
+      "sha256": "e3c319629d7e98a43d450b2acd3c266f4d200df6d3d1745c8199fdc778ab4322"
+    },
+    {
+      "path": "worker/review_frames.py",
+      "bytes": 8482,
+      "sha256": "86e9a76330a8dc6d5e711ce8dda6b983a2a4264742c5c9a3b5c20c8bb0d49588"
+    },
+    {
+      "path": "worker/sprite_preview.py",
+      "bytes": 1802,
+      "sha256": "85ac5b485bfce181c624f789e8e43c0fe0f80fed49cc307e9b07fdd363ccdff7"
+    },
+    {
+      "path": "启动资产工坊.cmd",
+      "bytes": 79,
+      "sha256": "0b4a9b507e8b411021ab66cdd852e2ab6381594db212a8d0828fb3e2a7b0c9db"
+    },
+    {
+      "path": "迁移必读.md",
+      "bytes": 8042,
+      "sha256": "bdf89dcd5e23f4f24bbcdb371361d1ea6ef20bfc36b8d3e9eddcbe42ce69cbed"
+    }
+  ]
+}

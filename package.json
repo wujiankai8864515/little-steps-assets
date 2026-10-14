@@ -1,0 +1,34 @@
+{
+  "name": "asset-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "start": "node server/index.mjs",
+    "seed": "node scripts/seed.mjs",
+    "cli": "node scripts/cli.mjs",
+    "mcp": "node scripts/mcp.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "@radix-ui/react-dialog": "^1.2.0",
+    "@radix-ui/react-progress": "^1.1.17",
+    "@radix-ui/react-select": "^2.3.8",
+    "@radix-ui/react-toggle-group": "^1.1.20",
+    "@radix-ui/react-tooltip": "^1.3.0",
+    "@xyflow/react": "^12.12.0",
+    "express": "^5.1.0",
+    "fflate": "^0.8.2",
+    "lucide-react": "^0.468.0",
+    "multer": "^2.0.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "three": "^0.186.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "vite": "^8.0.0"
+  }
+}

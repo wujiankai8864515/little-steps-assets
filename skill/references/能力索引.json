@@ -1,0 +1,312 @@
+{
+  "版本": 6,
+  "说明": "按需读取一个模块。示例中的 ID 必须替换为实时检索返回值；判断由调用者 Codex 完成。",
+  "能力": [
+    {
+      "名称": "独立资产库存",
+      "何时用": "查看已有模型、来源动作和不同模型/构图的序列帧",
+      "文档": "资产工作流.md",
+      "命令": [
+        "library"
+      ],
+      "示例": {
+        "command": "library",
+        "arguments": {
+          "kind": "model",
+          "limit": 24
+        }
+      },
+      "返回": "归组模型及版本、精确动作 ref、独立序列帧；封面和卡片预览地址",
+      "完成条件": "库存查询不代表工作台选用或目标适用性通过",
+      "收费": false,
+      "修改资产": false
+    },
+    {
+      "名称": "模型命名和缺骨骼接回",
+      "何时用": "独立模型上传或生成需要命名，或者目标模型没有骨骼",
+      "文档": "模型与动作.md",
+      "命令": [
+        "model-name",
+        "upload",
+        "import",
+        "rig-adopt"
+      ],
+      "必需输入": [
+        "用户指定的模型 name（1–60 字）",
+        "绑定返回原模型 modelId 与双方真实 sha256",
+        "外观确认后 confirmAppearance:true"
+      ],
+      "示例": {
+        "command": "model-name",
+        "arguments": {
+          "modelId": "实时模型ID",
+          "name": "用户指定名称"
+        }
+      },
+      "返回": "模型名更新，或同一工作台的已绑定模型版本；原文件保留",
+      "完成条件": "命名不等于绑定完成；外部绑定、With Skin 导回和预览确认后接回，动作不自动选用",
+      "收费": false,
+      "修改资产": true
+    },
+    {
+      "名称": "工作台内预览与选用",
+      "何时用": "看模型到动作到图片的依赖、统一多动作资产和播放验收",
+      "文档": "资产工作流.md",
+      "命令": [
+        "asset-flow",
+        "group-sprites",
+        "sprite-set",
+        "sprite-playback",
+        "onion-preview",
+        "flow-layout",
+        "workspace-select",
+        "workspace-selection",
+        "workspace-compose",
+        "workspace-complete",
+        "workspace-export",
+        "workspace-onion",
+        "workspace-name",
+        "workspace-draft"
+      ],
+      "必需输入": [
+        "实际 modelId 或 spriteSetId",
+        "归组时同模型同构图 selections"
+      ],
+      "示例": {
+        "command": "asset-flow",
+        "arguments": {}
+      },
+      "返回": "精确选用清单、待选素材、真实任务、节点内预览地址",
+      "轮询": "onion-preview 返回 preparing 时 wait，成功后同参重调",
+      "完成条件": "用户明确选择后进入工作台；制作成功和选用均不自动等于质量审核通过",
+      "失败下一步": "缺帧按确认构图生成；不同模型版本/构图不强行归组；失败显式重试",
+      "收费": false,
+      "修改资产": "新增动作集；播放顺序和布局单独保存，原模型和帧不变",
+      "界面约定": "模型框只展示原始静止外观，无功能按钮；动作与序列帧各在本框播放，点动作行 ▶ 指定片段，无重复选择器。模型选择在顶部。 新建工作台由用户命名；增量切换模型版本，恢复草稿与旧帧。资产库另提供卡片内独立预览。"
+    },
+    {
+      "名称": "检索资产",
+      "何时用": "找模型、动作、骨架、贴图、帧与校对",
+      "文档": "asset-map.md",
+      "命令": [
+        "search",
+        "inspect"
+      ],
+      "必需输入": [
+        "inspect.ref"
+      ],
+      "示例": {
+        "command": "search",
+        "arguments": {
+          "kind": "model",
+          "q": "士兵",
+          "limit": 12
+        }
+      },
+      "返回": "默认已选用目录；includeCandidates:true 包含待选，返回 selectionStatus",
+      "完成条件": "检查 exists、sha256、许可与质量；候选不是适用结论",
+      "失败下一步": "无已选项先扩大待选检索，少量展示供用户挑选，不直接生成或批量加入",
+      "收费": false,
+      "修改资产": false
+    },
+    {
+      "名称": "需求与续接",
+      "何时用": "多步骤玩法需求或换 AI 继续",
+      "文档": "交接与续作.md",
+      "命令": [
+        "plans",
+        "plan",
+        "plan-status"
+      ],
+      "必需输入": [
+        "新计划 title/motions",
+        "续作 id"
+      ],
+      "示例": {
+        "command": "plans",
+        "arguments": {
+          "q": "古代士兵"
+        }
+      },
+      "返回": "计划、缺口、真实任务与产物",
+      "轮询": "plan-status / job",
+      "完成条件": "已有产物经过对应质量查看并交接；计划存在不是制作完成",
+      "失败下一步": "按 gaps/nextAdvice 处理，单项选择用 motionSelections",
+      "收费": false,
+      "修改资产": "只写计划记录"
+    },
+    {
+      "名称": "模型与动作生产",
+      "何时用": "导入、试播、装动作或整理模型",
+      "文档": "模型与动作.md",
+      "命令": [
+        "import",
+        "preview",
+        "preview-status",
+        "compose",
+        "remove-motions",
+        "motion-quality",
+        "upload"
+      ],
+      "必需输入": [
+        "精确 modelId",
+        "动作 ref 或 assetId/index"
+      ],
+      "示例": {
+        "command": "preview",
+        "arguments": {
+          "modelId": "检索返回的模型ID",
+          "ref": "检索返回的motion引用"
+        }
+      },
+      "返回": "preview 或 job；质量命令返回判断记录",
+      "轮询": "preview-status 或 wait",
+      "完成条件": "succeeded 的输出经 inspect；upload 的 needs_input+artifactsReady 表示 FBX 可用于下一步官网操作",
+      "失败下一步": "缺骨架去网站绑定；不兼容换来源；临时失败才重试",
+      "收费": false,
+      "修改资产": "新增不可变版本或判断，不改原包"
+    },
+    {
+      "名称": "生成新模型",
+      "何时用": "无合适形象且已有明确生成意图",
+      "文档": "模型与动作.md",
+      "命令": [
+        "quote",
+        "submit",
+        "quote-status",
+        "resume",
+        "generation-draft"
+      ],
+      "必需输入": [
+        "完整规格/参考",
+        "报价ID与本次费用授权",
+        "图片模式为有序 1–32 张 imageIds，文字仅作备注"
+      ],
+      "示例": {
+        "command": "quote-status",
+        "arguments": {
+          "quoteId": "原始报价ID"
+        }
+      },
+      "返回": "草稿或实时报价/真实生成 job；恢复不自动提交",
+      "轮询": "job/wait",
+      "完成条件": "原任务完成并入库，随后看形象和骨架",
+      "失败下一步": "未知提交结果先按 quoteId 查回，禁止另付一单",
+      "收费": "仅授权 submit；图片 quote 可能上传参考",
+      "修改资产": "生成成功新增模型"
+    },
+    {
+      "名称": "二维序列帧",
+      "何时用": "同构图输出一个或多个动作",
+      "文档": "序列帧与校对.md",
+      "命令": [
+        "save-view",
+        "frames",
+        "render",
+        "view-cache",
+        "save-frames",
+        "sprite-preview"
+      ],
+      "必需输入": [
+        "modelId/clips",
+        "确认构图或明确 viewMode=default"
+      ],
+      "示例": {
+        "command": "frames",
+        "arguments": {
+          "modelId": "实际模型ID",
+          "clips": [
+            0,
+            1
+          ],
+          "presetId": "同哈希确认预设ID"
+        }
+      },
+      "返回": "逐片段持久任务",
+      "轮询": "wait",
+      "完成条件": "每项 succeeded 与真实 sprites 资产；部分失败不可报全批完成",
+      "失败下一步": "缺构图去网页确认；失败读 items，retry 复用成功项",
+      "收费": false,
+      "修改资产": "新增原帧包"
+    },
+    {
+      "名称": "洋葱皮与 AI 校对",
+      "何时用": "看多动作衔接、锚点、裁切、疑似脚滑",
+      "文档": "序列帧与校对.md",
+      "命令": [
+        "review-options",
+        "review-frames",
+        "review-status",
+        "review-result"
+      ],
+      "必需输入": [
+        "有序序列片段",
+        "衔接意图",
+        "保存判断时报告哈希与证据ID"
+      ],
+      "示例": {
+        "command": "review-options",
+        "arguments": {}
+      },
+      "返回": "证据 job，之后 review 报告与判断",
+      "轮询": "wait 后 review-status",
+      "完成条件": "调用者打开真实证据图，提交分项 checks 与中文建议；未看图不能声称 AI 通过",
+      "失败下一步": "缺图/构图不一致先重出帧；证据不足填 not_assessed",
+      "收费": false,
+      "修改资产": "新增报告/判断，原 PNG 不变"
+    },
+    {
+      "名称": "交付到游戏",
+      "何时用": "制作结束交给另一个项目或 AI",
+      "文档": "交接与续作.md",
+      "命令": [
+        "handoff"
+      ],
+      "必需输入": [
+        "成品 refs 或 modelId/spritesIds/reviewIds"
+      ],
+      "示例": {
+        "command": "handoff",
+        "arguments": {
+          "modelId": "实际成品ID",
+          "rootMotionPolicy": "unknown",
+          "unresolved": [
+            "按目标项目确认循环与根运动"
+          ]
+        }
+      },
+      "返回": "统一 JSON、中文说明、精确文件",
+      "完成条件": "交接文件已创建；游戏是否运行由目标项目另行说明",
+      "失败下一步": "缺文件或哈希变化先定位真实资产，不按同名替代",
+      "收费": false,
+      "修改资产": "新增交接清单，不自动改游戏"
+    },
+    {
+      "名称": "打开与迁移",
+      "何时用": "打开网页、停服务、换盘或打包库",
+      "文档": "运行与迁移.md",
+      "命令": [
+        "location",
+        "doctor",
+        "open",
+        "stop",
+        "bind",
+        "pack",
+        "restore"
+      ],
+      "必需输入": [
+        "pack.output",
+        "restore.archive+destination 或独立程序/数据目录"
+      ],
+      "示例": {
+        "command": "location",
+        "arguments": {}
+      },
+      "返回": "真实路径、服务身份或迁移阶段",
+      "完成条件": "恢复/绑定/依赖可用分开记录；open 返回身份匹配 URL",
+      "失败下一步": "服务忙则复用；缺依赖补齐；端口不符不强杀；不创建空库",
+      "收费": false,
+      "修改资产": "复制恢复/改绑定，保留原库"
+    }
+  ]
+}
